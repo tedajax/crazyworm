@@ -16,10 +16,18 @@ namespace CrazyWorm
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        InputManager GameInput;
+
         public BaseGame()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+
             Content.RootDirectory = "Content";
+
+            GameInput = new InputManager();
         }
 
         protected override void Initialize()
@@ -38,8 +46,13 @@ namespace CrazyWorm
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            GameInput.UpdateNewInput();
+
+            if (GameInput.GetKeyPressedState(Keys.Escape) == KeyPressedState.JustPressed)
                 this.Exit();
+
+
+            GameInput.UpdateOldInput();
 
             base.Update(gameTime);
         }
