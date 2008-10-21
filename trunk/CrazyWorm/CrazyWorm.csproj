@@ -52,8 +52,12 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="PlayWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
