@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CrazyWorm
 {
-    enum WindowMode
+    public enum WindowMode
     {
         Active,     //An active window will update and draw
         Disabled,   //A disabled window will draw but NOT update
@@ -15,7 +15,7 @@ namespace CrazyWorm
         Destroy     //A window set to destroy will be removed on cleanup
     }
 
-    abstract class Window
+    public abstract class Window
     {
         protected WindowMode Mode;
         protected string Name;

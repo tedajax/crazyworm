@@ -8,10 +8,14 @@ namespace CrazyWorm
 {
     class PlayWindow : Window
     {
+        Player play;
+
         public PlayWindow()
         {
             Name = "PlayWindow";
             Mode = WindowMode.Active;
+
+            play = new Player();
 
             Initialize();
         }
@@ -23,12 +27,12 @@ namespace CrazyWorm
 
         protected override void Update(GameTime gameTime)
         {
-            
+            play.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            
+            play.Draw();
         }
     }
 }

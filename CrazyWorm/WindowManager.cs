@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CrazyWorm
 {
-    class WindowManager
+    public class WindowManager
     {
         List<Window> WindowList;
 
