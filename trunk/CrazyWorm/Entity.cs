@@ -7,13 +7,13 @@ namespace CrazyWorm
 {
     abstract class Entity
     {
-        Vector2 Position; //2D position
-        Vector2 Velocity; //Change position by this much
-        Vector2 Origin; //Where to rotate around on the entity
-        Vector2 Scale; //(1, 1) would be default scaling, (2, 2) would be twice as large, (0.5f, 0.5f) half size
-        float Rotation; //angle, top-down rotation in radians
+        protected Vector2 Position; //2D position
+        protected Vector2 Velocity; //Change position by this much
+        protected Vector2 Origin; //Where to rotate around on the entity
+        protected Vector2 Scale; //(1, 1) would be default scaling, (2, 2) would be twice as large, (0.5f, 0.5f) half size
+        protected float Rotation; //angle, top-down rotation in radians
 
-        Vector2 ResScaler; //Scaler for position, scale, and velocity based on resolution
+        protected Vector2 ResScaler; //Scaler for position, scale, and velocity based on resolution
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw();

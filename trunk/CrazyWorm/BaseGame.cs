@@ -34,26 +34,27 @@ namespace CrazyWorm
     public class BaseGame : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
-        InputManager GameInput;
-        static ResolutionManager GameRes;
-        WindowManager WinMan;
+        private static SpriteBatch spriteBatch;
+        private static ContentManager ContMan;
+        private static InputManager GameInput;
+        private static ResolutionManager GameRes;
+        private static WindowManager WinMan;
+        private static SpriteFont DebugFont;
 
         public BaseGame()
         {
             graphics = new GraphicsDeviceManager(this);
 
-            GameRes = new ResolutionManager(new Vector2(1280, 720));
+            GameRes = new ResolutionManager(new Vector2(640, 360));
 
             graphics.PreferredBackBufferWidth = GameRes.GetResX();
             graphics.PreferredBackBufferHeight = GameRes.GetResY();
 
             Content.RootDirectory = "Content";
-
+            ContMan = Content;
+                        
             GameInput = new InputManager();
             WinMan = new WindowManager();
-            
         }
 
         protected override void Initialize()
@@ -64,6 +65,10 @@ namespace CrazyWorm
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            DebugFont = Content.Load<SpriteFont>("Debug");
+
+            WinMan.AddWindow(new PlayWindow());
         }
 
         protected override void UnloadContent()
@@ -77,6 +82,7 @@ namespace CrazyWorm
             if (GameInput.GetKeyPressedState(Keys.Escape) == KeyPressedState.JustPressed)
                 this.Exit();
 
+            WinMan.Update(gameTime);
 
             GameInput.UpdateOldInput();
 
@@ -86,11 +92,20 @@ namespace CrazyWorm
         protected override void Draw(GameTime gameTime)
         {
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin(); //Begin so that all 2D drawing doesn't fuck up
 
+            WinMan.Draw(gameTime);
+
+            spriteBatch.End(); //End the spritebatch so that all 2D drawing doesn't fuck up
             base.Draw(gameTime);
         }
 
         //public method to get the Resolution Scaler
         public static Vector2 GetResScaler() { return GameRes.GetResScaler(); }
+        public static SpriteBatch GetSpriteBatch() { return spriteBatch; }
+        public static ContentManager GetContent() { return ContMan; }
+        public static InputManager GetInMan() { return GameInput; }
+        public static WindowManager GetWinMan() { return WinMan; }
+        public static SpriteFont GetDebugFont() { return DebugFont; }
     }
 }
