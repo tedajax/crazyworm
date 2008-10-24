@@ -8,7 +8,7 @@ namespace CrazyWorm
     abstract class Actor : Entity
     {
         protected List<Rectangle> CollisionBoxes;
-        protected List<Circle> CollisionCircles;
+        protected List<BoundingCircle> CollisionCircles;
         protected Boolean SolidObject;
 
         public override void Update(GameTime gameTime)
@@ -26,9 +26,9 @@ namespace CrazyWorm
         public void AddCollBox(Rectangle newcol) { CollisionBoxes.Add(newcol); }
         public void ClearCollBoxes() { CollisionBoxes.Clear(); }
 
-        public List<Circle> GetCollCircs() { return CollisionCircles; }
-        public void SetCollCircs(List<Circle> newcol) { CollisionCircles = newcol; }
-        public void AddCollCirc(Circle newcol) { CollisionCircles.Add(newcol); }
+        public List<BoundingCircle> GetCollCircs() { return CollisionCircles; }
+        public void SetCollCircs(List<BoundingCircle> newcol) { CollisionCircles = newcol; }
+        public void AddCollCirc(BoundingCircle newcol) { CollisionCircles.Add(newcol); }
         public void ClearCollCircs() { CollisionCircles.Clear(); }
         
         public Boolean Solid() { return SolidObject; }

@@ -107,5 +107,21 @@ namespace CrazyWorm
         public static InputManager GetInMan() { return GameInput; }
         public static WindowManager GetWinMan() { return WinMan; }
         public static SpriteFont GetDebugFont() { return DebugFont; }
+
+        public static float WrapValueDegree(float degree)
+        {
+            while (degree > 360) degree -= 360;
+            while (degree < 0) degree += 360;
+
+            return degree;
+        }
+
+        public static float WrapValueRadian(float radian)
+        {
+            while (radian > MathHelper.TwoPi) radian -= MathHelper.TwoPi;
+            while (radian < 0) radian += MathHelper.TwoPi;
+
+            return radian;
+        }
     }
 }

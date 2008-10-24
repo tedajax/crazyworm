@@ -5,14 +5,20 @@ using Microsoft.Xna.Framework;
 
 namespace CrazyWorm
 {
-    class Circle
+    class BoundingCircle
     {
         protected Vector2 position;
         protected float radius;
 
-        public Circle(Vector2 pos, float rad)
+        public BoundingCircle(Vector2 pos, float rad)
         {
             position = pos;
+            radius = rad;
+        }
+
+        public BoundingCircle(float x, float y, float rad)
+        {
+            position = new Vector2(x, y);
             radius = rad;
         }
 
@@ -28,7 +34,7 @@ namespace CrazyWorm
             set { radius = value; }
         }
 
-        public bool Intersects(Circle c)
+        public bool Intersects(BoundingCircle c)
         {
             if (Vector2.Distance(position, c.Position) <= (radius + c.Radius))
                 return true;
