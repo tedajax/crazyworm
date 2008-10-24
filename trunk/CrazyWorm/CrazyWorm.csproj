@@ -57,7 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
-    <Compile Include="Circle.cs" />
+    <Compile Include="BoundingCircle.cs" />
+    <Compile Include="BoundingRectangle.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Player.cs" />
