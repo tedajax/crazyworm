@@ -45,7 +45,7 @@ namespace CrazyWorm
         {
             graphics = new GraphicsDeviceManager(this);
 
-            GameRes = new ResolutionManager(new Vector2(640, 360));
+            GameRes = new ResolutionManager(new Vector2(1280, 720));
 
             graphics.PreferredBackBufferWidth = GameRes.GetResX();
             graphics.PreferredBackBufferHeight = GameRes.GetResY();

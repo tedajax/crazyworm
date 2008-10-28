@@ -14,6 +14,18 @@ namespace CrazyWorm
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
         }
 
+        public VisibleActor(string img, Vector2 pos)
+        {
+            ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
+            Position = pos;
+        }
+
+        public VisibleActor(Texture2D img, Vector2 pos)
+        {
+            ActorSprite = new Sprite(img);
+            Position = pos;
+        }
+
         public override void Update(GameTime gameTime)
         {
             ActorSprite.SetPosition(Position);
