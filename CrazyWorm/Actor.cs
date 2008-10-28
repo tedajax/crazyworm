@@ -7,7 +7,7 @@ namespace CrazyWorm
 {
     abstract class Actor : Entity
     {
-        protected List<Rectangle> CollisionBoxes;
+        protected List<BoundingRectangle> CollisionBoxes;
         protected List<BoundingCircle> CollisionCircles;
         protected Boolean SolidObject;
 
@@ -21,9 +21,9 @@ namespace CrazyWorm
             throw new Exception("This method should not be used!");
         }
                 
-        public List<Rectangle> GetCollBoxes() { return CollisionBoxes; }
-        public void SetCollBoxes(List<Rectangle> newcol) { CollisionBoxes = newcol; }
-        public void AddCollBox(Rectangle newcol) { CollisionBoxes.Add(newcol); }
+        public List<BoundingRectangle> GetCollBoxes() { return CollisionBoxes; }
+        public void SetCollBoxes(List<BoundingRectangle> newcol) { CollisionBoxes = newcol; }
+        public void AddCollBox(BoundingRectangle newcol) { CollisionBoxes.Add(newcol); }
         public void ClearCollBoxes() { CollisionBoxes.Clear(); }
 
         public List<BoundingCircle> GetCollCircs() { return CollisionCircles; }

@@ -120,7 +120,7 @@ namespace CrazyWorm
                 return false;
             else //fuck, the entirely likely chance that the previous cases do not apply
             {
-
+                return false;
             }
         }
     }

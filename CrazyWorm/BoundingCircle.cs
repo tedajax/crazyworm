@@ -41,5 +41,11 @@ namespace CrazyWorm
             else
                 return false;
         }
+
+        //implement later
+        public bool Intersects(BoundingRectangle r)
+        {
+            return false;
+        }
     }
 }
