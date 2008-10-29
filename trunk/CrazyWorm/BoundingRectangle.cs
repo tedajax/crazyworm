@@ -108,20 +108,13 @@ namespace CrazyWorm
 
         public bool Intersects(BoundingCircle c)
         {
-            //Calculate the smallest distance from the center of the Rectangle to the nearest edge
-            float mindist = (MathHelper.Min(Width, Height) == Width ? Width / 2 : Height / 2);
-            //Read the above as "If the width dimension is less than the height dimension set the minimum distance to width / 2, otherwise set the distance to height / 2
-            float maxdist = (float)Math.Sqrt(Math.Pow((double)Width / 2, 2) + Math.Pow((double)Height / 2, 2));
-            //Use pythagorean theorem to work out the maximum distance
+            Vector2 rectCenter = new Vector2(X + Width / 2, Y + Height / 2);
+            float dist = Vector2.Distance(rectCenter, c.Position) - c.Radius;
+            if (dist < Width / 2)
+                if (dist < Height / 2)
+                    return true;
 
-            if (Vector2.Distance(position, c.Position) - (mindist + c.Radius) < mindist)
-                return true;
-            else if (Vector2.Distance(position, c.Position) - (maxdist + c.Radius) > maxdist)
-                return false;
-            else //fuck, the entirely likely chance that the previous cases do not apply
-            {
-                return false;
-            }
+            return false;
         }
     }
 }
