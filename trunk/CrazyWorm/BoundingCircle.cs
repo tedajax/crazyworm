@@ -42,9 +42,14 @@ namespace CrazyWorm
                 return false;
         }
 
-        //implement later
         public bool Intersects(BoundingRectangle r)
-        {
+        {            
+            Vector2 rectCenter = new Vector2(r.X + r.Width / 2, r.Y + r.Height / 2);
+            float dist = Vector2.Distance(rectCenter, Position) - Radius;
+            if (dist < r.Width / 2)
+                if (dist < r.Height / 2)
+                    return true;
+
             return false;
         }
     }
