@@ -40,6 +40,7 @@ namespace CrazyWorm
         private static ResolutionManager GameRes;
         private static WindowManager WinMan;
         private static SpriteFont DebugFont;
+        private static Random rand;
 
         public BaseGame()
         {
@@ -52,6 +53,8 @@ namespace CrazyWorm
 
             Content.RootDirectory = "Content";
             ContMan = Content;
+
+            rand = new Random();
                         
             GameInput = new InputManager();
             WinMan = new WindowManager();
@@ -107,6 +110,16 @@ namespace CrazyWorm
         public static InputManager GetInMan() { return GameInput; }
         public static WindowManager GetWinMan() { return WinMan; }
         public static SpriteFont GetDebugFont() { return DebugFont; }
+
+        public static InputManager Input
+        {
+            get { return GameInput; }
+        }
+
+        public static Random Rand
+        {
+            get { return rand; }
+        }
 
         public static float WrapValueDegree(float degree)
         {

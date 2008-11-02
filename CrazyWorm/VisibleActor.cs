@@ -11,7 +11,7 @@ namespace CrazyWorm
         Sprite ActorSprite;
         public VisibleActor(string img)
         {
-            ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
+            ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));            
         }
 
         public VisibleActor(string img, Vector2 pos)
@@ -26,8 +26,14 @@ namespace CrazyWorm
             Position = pos;
         }
 
+        public void SetColor(Color col)
+        {
+            ActorSprite.SetColor(col);
+        }
+
         public override void Update(GameTime gameTime)
         {
+            Position += Velocity;
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
         }
