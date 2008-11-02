@@ -62,29 +62,7 @@ namespace CrazyWorm
             }
             else
             {
-                if (!reanimating)
-                {
-                    foreach (VisibleActor v in BodySegments)
-                    {
-                        v.Update(gameTime);
-                    }
-                }
-                else
-                {
-                    reanimating = false;
-                    dead = false;
-                    foreach (VisibleActor v in BodySegments)
-                    {
-                        v.SetPosition(Vector2.Lerp(v.GetPosition(), Position, 0.1f));
-                        if (Vector2.Distance(v.GetPosition(), Position) > 0.1f)
-                        {
-                            reanimating = true;
-                            dead = true;
-                        }
-
-                        v.Update(gameTime);
-                    }
-                }
+                UpdateInDeath(gameTime);
             }
         }
 
@@ -145,8 +123,9 @@ namespace CrazyWorm
 
             for (int i = 0; i < BodySegments.Count; i++)
             {
-                BodySegments[i].SetVelocity(new Vector2((float)Math.Cos((double)(BaseGame.Rand.NextDouble() * MathHelper.TwoPi)),
-                                                        (float)Math.Sin((double)(BaseGame.Rand.NextDouble() * MathHelper.TwoPi))));
+                float mult = BaseGame.Rand.Next(2, 5);
+                BodySegments[i].SetVelocity(new Vector2(mult * (float)Math.Cos((double)(BaseGame.Rand.NextDouble() * MathHelper.TwoPi)),
+                                                        mult * (float)Math.Sin((double)(BaseGame.Rand.NextDouble() * MathHelper.TwoPi))));
             }
         }
 
@@ -158,6 +137,33 @@ namespace CrazyWorm
             foreach (VisibleActor v in BodySegments)
             {
                 v.SetVelocity(Vector2.Zero);
+            }
+        }
+
+        public void UpdateInDeath(GameTime gameTime)
+        {
+            if (!reanimating)
+            {
+                foreach (VisibleActor v in BodySegments)
+                {
+                    v.Update(gameTime);
+                }
+            }
+            else
+            {
+                reanimating = false;
+                dead = false;
+                foreach (VisibleActor v in BodySegments)
+                {
+                    v.SetPosition(Vector2.Lerp(v.GetPosition(), Position, 0.1f));
+                    if (Vector2.Distance(v.GetPosition(), Position) > 0.75f)
+                    {
+                        reanimating = true;
+                        dead = true;
+                    }
+
+                    v.Update(gameTime);
+                }
             }
         }
     }
