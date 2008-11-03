@@ -18,6 +18,8 @@ namespace CrazyWorm
 
         bool dead = false; //you would hopefully start out alive, otherwise it's not a very fun game
         bool reanimating = false; //just for giggles, will allow an animation to be played of the segments going back to the player if they're reanimated, why they would be reanimated I have no idea
+        bool collisionon = false; //because if we spawned on top of ourselves with it on we would die instantly, not a very good game
+        TimeSpan tocollisionon; //when it hits 0 turn on collision
 
         public Player()
         {
@@ -29,26 +31,42 @@ namespace CrazyWorm
 
             BodySegments = new List<VisibleActor>();
 
+            tocollisionon = new TimeSpan(0, 0, 1);
+
             AddSegments(1000);
         }
 
         public override void Update(GameTime gameTime)
         {
             if (BaseGame.Input.GetKeyPressedState(Keys.Space) == KeyPressedState.JustPressed)
+            {
                 if (!dead)
                     Death();
                 else
                     ReAnimate();
+            }
 
             if (BaseGame.Input.GetKeyPressedState(Keys.LeftControl) == KeyPressedState.Pressed)
-                AddSegments(1);
+                AddSegments(1);          
 
             if (!dead)
             {
+                if (tocollisionon.TotalMilliseconds > 0)
+                {
+                    tocollisionon -= gameTime.ElapsedGameTime;
+                    if (collisionon)
+                        TurnOffCollision();
+                }
+
+                if (tocollisionon.TotalMilliseconds <= 0 && !collisionon) TurnOnCollision();
+
                 if (BaseGame.GetInMan().GetKeyPressedState(Keys.Left) == KeyPressedState.Pressed)
                     Rotation -= rotspeed;
                 if (BaseGame.GetInMan().GetKeyPressedState(Keys.Right) == KeyPressedState.Pressed)
                     Rotation += rotspeed;
+
+                //Keep rotation within 0 - 2pi range
+                Rotation = BaseGame.WrapValueRadian(Rotation);
 
                 Velocity.X = speed * (float)Math.Cos((double)Rotation);
                 Velocity.Y = speed * (float)Math.Sin((double)Rotation);
@@ -92,6 +110,15 @@ namespace CrazyWorm
             for (int i = 0; i < num; i++)
             {
                 BodySegments.Add(new VisibleActor(segmentimg, startpos));
+                if (BodySegments.Count >= 50)
+                {
+                    //Collision objects positions are relative to the position of the actor not the world coordinates
+                    BodySegments[i].AddCollCirc(new BoundingCircle(new Vector2(segmentimg.Width / 2, segmentimg.Height / 2), segmentimg.Width / 2));
+                    if (!collisionon)
+                        BodySegments[i].SetSolid(false);
+                    else
+                        BodySegments[i].SetSolid(true);
+                }
             }
         }
 
@@ -110,6 +137,30 @@ namespace CrazyWorm
             }
         }
 
+        private void TurnOnCollision()
+        {
+            collisionon = true;
+            if (BodySegments.Count > 50)
+            {
+                for (int i = 49; i < BodySegments.Count; i++)
+                {
+                    BodySegments[i].SetSolid(true);
+                }
+            }
+        }
+
+        private void TurnOffCollision()
+        {
+            collisionon = false;
+            if (BodySegments.Count > 50)
+            {
+                for (int i = 49; i < BodySegments.Count; i++)
+                {
+                    BodySegments[i].SetSolid(false);
+                }
+            }
+        }
+
         private void DrawSegments()
         {
             //draw in reverse order because we want the images closest to the head drawn on top
@@ -120,6 +171,8 @@ namespace CrazyWorm
         private void Death()
         {
             dead = true;
+            collisionon = false;
+            tocollisionon = new TimeSpan(0, 0, 1);
 
             for (int i = 0; i < BodySegments.Count; i++)
             {
@@ -148,6 +201,15 @@ namespace CrazyWorm
                 {
                     v.Update(gameTime);
                 }
+
+                Position = Vector2.Lerp(Position, new Vector2(1280 / 2, 720 / 2), 0.1f);
+                Rotation = MathHelper.Lerp(Rotation, 0, 0.1f);
+
+                //Keep rotation within 0 - 2pi range
+                Rotation = BaseGame.WrapValueRadian(Rotation);
+
+                PlayerSprite.SetPosition(Position);
+                PlayerSprite.SetRotation(Rotation);
             }
             else
             {
