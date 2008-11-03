@@ -25,12 +25,16 @@ namespace CrazyWorm
         public void SetCollBoxes(List<BoundingRectangle> newcol) { CollisionBoxes = newcol; }
         public void AddCollBox(BoundingRectangle newcol) { CollisionBoxes.Add(newcol); }
         public void ClearCollBoxes() { CollisionBoxes.Clear(); }
+        public int CollBoxCount() { return CollisionBoxes.Count; }
 
         public List<BoundingCircle> GetCollCircs() { return CollisionCircles; }
         public void SetCollCircs(List<BoundingCircle> newcol) { CollisionCircles = newcol; }
         public void AddCollCirc(BoundingCircle newcol) { CollisionCircles.Add(newcol); }
         public void ClearCollCircs() { CollisionCircles.Clear(); }
-        
+        public int CollCircCount() { return CollisionCircles.Count; }
+
+        public int TotalCollCount() { return CollisionBoxes.Count + CollisionCircles.Count; }
+
         public Boolean Solid() { return SolidObject; }
         public void SetSolid(Boolean sol) { SolidObject = sol; }
     }
