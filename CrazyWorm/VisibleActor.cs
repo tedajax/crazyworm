@@ -11,19 +11,31 @@ namespace CrazyWorm
         Sprite ActorSprite;
         public VisibleActor(string img)
         {
-            ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));            
+            ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
+
+            Initialize();
         }
 
         public VisibleActor(string img, Vector2 pos)
         {
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
             Position = pos;
+
+            Initialize();
         }
 
         public VisibleActor(Texture2D img, Vector2 pos)
         {
             ActorSprite = new Sprite(img);
             Position = pos;
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            CollisionBoxes = new List<BoundingRectangle>();
+            CollisionCircles = new List<BoundingCircle>();
         }
 
         public void SetColor(Color col)
