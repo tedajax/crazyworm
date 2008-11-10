@@ -34,8 +34,7 @@ namespace CrazyWorm
 
         private void Initialize()
         {
-            CollisionBoxes = new List<BoundingRectangle>();
-            CollisionCircles = new List<BoundingCircle>();
+            InitCollLists();
         }
 
         public void SetColor(Color col)

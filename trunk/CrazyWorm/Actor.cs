@@ -11,6 +11,12 @@ namespace CrazyWorm
         protected List<BoundingCircle> CollisionCircles;
         protected Boolean SolidObject;
 
+        protected void InitCollLists()
+        {
+            CollisionBoxes = new List<BoundingRectangle>();
+            CollisionCircles = new List<BoundingCircle>();
+        }
+
         public override void Update(GameTime gameTime)
         {
             throw new Exception("This method should not be used!");
@@ -34,6 +40,61 @@ namespace CrazyWorm
         public int CollCircCount() { return CollisionCircles.Count; }
 
         public int TotalCollCount() { return CollisionBoxes.Count + CollisionCircles.Count; }
+
+        public bool CollidesWith(Actor a)
+        {
+            //do some quick exclusions, (i.e. one or more of the actors is not solid or neither has any bounding objects)
+            if (!this.Solid() || !a.Solid() || this.TotalCollCount() == 0 || a.TotalCollCount() == 0)
+                return false;
+            else
+            {
+                //check for circle collisions
+                for (int i = 0; i < this.CollCircCount(); i++)
+                {
+                    BoundingCircle c1 = new BoundingCircle(this.GetCollCircs()[i].Position + this.GetPosition(), this.GetCollCircs()[i].Radius);
+
+                    for (int j = 0; j < a.CollCircCount(); j++)
+                    {
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
+                        
+                        if (c1.Intersects(c2))
+                            return true;
+                    }
+
+                    for (int h = i; h < a.CollBoxCount(); h++)
+                    {
+                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
+                        
+                        if (c1.Intersects(b2))
+                            return true;
+                    }
+                }
+
+                //check for rectangle collisions
+                for (int i = 0; i < this.CollBoxCount(); i++)
+                {
+                    BoundingRectangle b1 = new BoundingRectangle(this.GetCollBoxes()[i].Position + this.GetPosition(), this.GetCollBoxes()[i].Dimensions);
+
+                    for (int j = 0; j < a.CollCircCount(); j++)
+                    {
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
+
+                        if (b1.Intersects(c2))
+                            return true;
+                    }
+
+                    for (int h = i; h < a.CollBoxCount(); h++)
+                    {
+                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
+
+                        if (b1.Intersects(b2))
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         public Boolean Solid() { return SolidObject; }
         public void SetSolid(Boolean sol) { SolidObject = sol; }
