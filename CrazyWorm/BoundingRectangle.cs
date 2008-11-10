@@ -16,6 +16,12 @@ namespace CrazyWorm
             set { position = value; }
         }
 
+        public Vector2 Dimensions
+        {
+            get { return dimensions; }
+            set { dimensions = value; }
+        }
+
         public float X
         {
             get { return position.X; }

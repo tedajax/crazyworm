@@ -33,6 +33,10 @@ namespace CrazyWorm
 
             tocollisionon = new TimeSpan(0, 0, 1);
 
+            InitCollLists();
+            this.AddCollCirc(new BoundingCircle(new Vector2(img.Width / 2, img.Height / 2), 32));
+            SolidObject = true;
+
             AddSegments(1000);
         }
 
@@ -72,6 +76,8 @@ namespace CrazyWorm
                 Velocity.Y = speed * (float)Math.Sin((double)Rotation);
 
                 UpdateSegments(gameTime);
+
+                CheckCollisions();
 
                 Position += Velocity;
 
@@ -134,6 +140,18 @@ namespace CrazyWorm
 
                 BodySegments[0].SetPosition(Position);
                 BodySegments[0].Update(gameTime);
+            }
+        }
+
+        private void CheckCollisions()
+        {
+            if (collisionon)
+            {
+                for (int i = 50; i < BodySegments.Count; i++)
+                {
+                    if (this.CollidesWith(BodySegments[i]))
+                        Death();
+                }
             }
         }
 
