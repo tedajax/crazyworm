@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CrazyWorm
 {
-    class Sprite : Entity
+    public class Sprite : Entity
     {
         protected Texture2D SpriteImage;
         protected Boolean Hidden;

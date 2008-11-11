@@ -6,9 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CrazyWorm
 {
-    class VisibleActor : Actor
+    public abstract class VisibleActor : Actor
     {
-        Sprite ActorSprite;
+        protected Sprite ActorSprite;
+        /*
         public VisibleActor(string img)
         {
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>(img));
@@ -35,7 +36,7 @@ namespace CrazyWorm
         private void Initialize()
         {
             InitCollLists();
-        }
+        }*/
 
         public void SetColor(Color col)
         {

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace CrazyWorm
 {
-    abstract class Entity
+    public abstract class Entity
     {
         protected Vector2 Position; //2D position
         protected Vector2 Velocity; //Change position by this much

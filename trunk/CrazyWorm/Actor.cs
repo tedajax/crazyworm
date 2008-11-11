@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace CrazyWorm
 {
-    abstract class Actor : Entity
+    public abstract class Actor : Entity
     {
         protected List<BoundingRectangle> CollisionBoxes;
         protected List<BoundingCircle> CollisionCircles;
@@ -51,11 +51,11 @@ namespace CrazyWorm
                 //check for circle collisions
                 for (int i = 0; i < this.CollCircCount(); i++)
                 {
-                    BoundingCircle c1 = new BoundingCircle(this.GetCollCircs()[i].Position + this.GetPosition(), this.GetCollCircs()[i].Radius);
+                    BoundingCircle c1 = new BoundingCircle(this.GetCollCircs()[i].Position - this.GetCollCircs()[i].WidthModifier + this.GetPosition(), this.GetCollCircs()[i].Radius);
 
                     for (int j = 0; j < a.CollCircCount(); j++)
                     {
-                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position - a.GetCollCircs()[i].WidthModifier + a.GetPosition(), a.GetCollCircs()[j].Radius);
                         
                         if (c1.Intersects(c2))
                             return true;
@@ -63,7 +63,7 @@ namespace CrazyWorm
 
                     for (int h = i; h < a.CollBoxCount(); h++)
                     {
-                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
+                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position - a.GetCollBoxes()[i].SizeModifier + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
                         
                         if (c1.Intersects(b2))
                             return true;
@@ -73,11 +73,11 @@ namespace CrazyWorm
                 //check for rectangle collisions
                 for (int i = 0; i < this.CollBoxCount(); i++)
                 {
-                    BoundingRectangle b1 = new BoundingRectangle(this.GetCollBoxes()[i].Position + this.GetPosition(), this.GetCollBoxes()[i].Dimensions);
+                    BoundingRectangle b1 = new BoundingRectangle(this.GetCollBoxes()[i].Position - this.GetCollBoxes()[i].SizeModifier + this.GetPosition(), this.GetCollBoxes()[i].Dimensions);
 
                     for (int j = 0; j < a.CollCircCount(); j++)
                     {
-                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position - a.GetCollCircs()[i].WidthModifier + a.GetPosition(), a.GetCollCircs()[j].Radius);
 
                         if (b1.Intersects(c2))
                             return true;
@@ -85,7 +85,7 @@ namespace CrazyWorm
 
                     for (int h = i; h < a.CollBoxCount(); h++)
                     {
-                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
+                        BoundingRectangle b2 = new BoundingRectangle(a.GetCollBoxes()[h].Position - a.GetCollBoxes()[i].SizeModifier + a.GetPosition(), a.GetCollBoxes()[h].Dimensions);
 
                         if (b1.Intersects(b2))
                             return true;
