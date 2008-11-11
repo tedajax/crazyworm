@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace CrazyWorm
 {
-    class BoundingCircle
+    public class BoundingCircle
     {
         protected Vector2 position;
         protected float radius;
@@ -26,6 +26,11 @@ namespace CrazyWorm
         {
             get { return position; }
             set { position = value; }
+        }
+
+        public Vector2 WidthModifier
+        {
+            get { return new Vector2(radius, radius); }
         }
 
         public float Radius

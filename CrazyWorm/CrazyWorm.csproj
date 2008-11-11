@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
+    <Compile Include="Apple.cs" />
     <Compile Include="BoundingCircle.cs" />
     <Compile Include="BoundingRectangle.cs" />
     <Compile Include="Collision.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="BaseGame.cs" />
+    <Compile Include="Segment.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="VisibleActor.cs" />
     <Compile Include="Window.cs" />

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace CrazyWorm
 {
-    class BoundingRectangle
+    public class BoundingRectangle
     {
         private Vector2 position;
         private Vector2 dimensions;
@@ -64,6 +64,11 @@ namespace CrazyWorm
         public float Right
         {
             get { return position.X + dimensions.X; }
+        }
+
+        public Vector2 SizeModifier
+        {
+            get { return new Vector2(Width / 2, Height / 2); }
         }
 
         /// <summary>

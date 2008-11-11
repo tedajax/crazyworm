@@ -10,7 +10,7 @@ namespace CrazyWorm
     class Player : Actor
     {
         Sprite PlayerSprite;
-        List<VisibleActor> BodySegments;
+        List<Segment> BodySegments;
         Texture2D segmentimg;
 
         float speed = 5; //speed multiplier
@@ -29,7 +29,7 @@ namespace CrazyWorm
 
             Position = new Vector2(1280 / 2, 720 / 2);
 
-            BodySegments = new List<VisibleActor>();
+            BodySegments = new List<Segment>();
 
             tocollisionon = new TimeSpan(0, 0, 1);
 
@@ -37,7 +37,7 @@ namespace CrazyWorm
             this.AddCollCirc(new BoundingCircle(new Vector2(img.Width / 2, img.Height / 2), 32));
             SolidObject = true;
 
-            AddSegments(1000);
+            AddSegments(10);
         }
 
         public override void Update(GameTime gameTime)
@@ -105,7 +105,7 @@ namespace CrazyWorm
                                                  Color.White);
         }
 
-        private void AddSegments(int num)
+        public void AddSegments(int num)
         {
             Vector2 startpos = Vector2.Zero;
             if (BodySegments.Count > 0)
@@ -115,15 +115,16 @@ namespace CrazyWorm
 
             for (int i = 0; i < num; i++)
             {
-                BodySegments.Add(new VisibleActor(segmentimg, startpos));
-                if (BodySegments.Count >= 50)
+                if (BodySegments.Count < 50)
+                    BodySegments.Add(new Segment(segmentimg, startpos, false));
+                else
                 {
-                    //Collision objects positions are relative to the position of the actor not the world coordinates
-                    BodySegments[i].AddCollCirc(new BoundingCircle(new Vector2(segmentimg.Width / 2, segmentimg.Height / 2), segmentimg.Width / 2));
+                    BodySegments.Add(new Segment(segmentimg, startpos, true));
+
                     if (!collisionon)
-                        BodySegments[i].SetSolid(false);
+                        BodySegments[BodySegments.Count - 1].SetSolid(false);
                     else
-                        BodySegments[i].SetSolid(true);
+                        BodySegments[BodySegments.Count - 1].SetSolid(true);
                 }
             }
         }
@@ -205,9 +206,10 @@ namespace CrazyWorm
         {
             reanimating = true;
 
-            foreach (VisibleActor v in BodySegments)
+            foreach (Segment v in BodySegments)
             {
                 v.SetVelocity(Vector2.Zero);
+                v.ReanimateSpeed = (float)BaseGame.Rand.Next(1, 3) / 10f;
             }
         }
 
@@ -215,13 +217,17 @@ namespace CrazyWorm
         {
             if (!reanimating)
             {
-                foreach (VisibleActor v in BodySegments)
+                foreach (Segment v in BodySegments)
                 {
                     v.Update(gameTime);
                 }
 
                 Position = Vector2.Lerp(Position, new Vector2(1280 / 2, 720 / 2), 0.1f);
-                Rotation = MathHelper.Lerp(Rotation, 0, 0.1f);
+
+                if (Rotation < MathHelper.Pi)
+                    Rotation = MathHelper.Lerp(Rotation, 0, 0.1f);
+                else
+                    Rotation = MathHelper.Lerp(Rotation, MathHelper.TwoPi, 0.1f);
 
                 //Keep rotation within 0 - 2pi range
                 Rotation = BaseGame.WrapValueRadian(Rotation);
@@ -233,16 +239,24 @@ namespace CrazyWorm
             {
                 reanimating = false;
                 dead = false;
-                foreach (VisibleActor v in BodySegments)
+
+                for (int i = 0; i < BodySegments.Count; i++)
                 {
-                    v.SetPosition(Vector2.Lerp(v.GetPosition(), Position, 0.1f));
-                    if (Vector2.Distance(v.GetPosition(), Position) > 0.75f)
+                    Segment v = BodySegments[i];
+                    v.SetPosition(Vector2.Lerp(v.GetPosition(), Position, v.ReanimateSpeed));
+                    if (Vector2.Distance(v.GetPosition(), Position) > 0.1f)
                     {
                         reanimating = true;
                         dead = true;
                     }
 
                     v.Update(gameTime);
+                }
+
+                if (reanimating == false && dead == false)
+                {
+                    BodySegments.Clear();
+                    AddSegments(10);
                 }
             }
         }
