@@ -21,6 +21,9 @@ namespace CrazyWorm
         bool collisionon = false; //because if we spawned on top of ourselves with it on we would die instantly, not a very good game
         TimeSpan tocollisionon; //when it hits 0 turn on collision
 
+        const int STARTING_SEGMENTS = 10;
+        public static int ADDED_SEGMENTS = 10;
+
         public Player()
         {
             Texture2D img = BaseGame.GetContent().Load<Texture2D>("wormhead");
@@ -37,7 +40,7 @@ namespace CrazyWorm
             this.AddCollCirc(new BoundingCircle(new Vector2(img.Width / 2, img.Height / 2), 32));
             SolidObject = true;
 
-            AddSegments(10);
+            AddSegments(STARTING_SEGMENTS);
         }
 
         public override void Update(GameTime gameTime)
@@ -100,7 +103,7 @@ namespace CrazyWorm
         private void DrawDebugInfo()
         {
             BaseGame.GetSpriteBatch().DrawString(BaseGame.GetDebugFont(),
-                                                 Position.ToString(),
+                                                 "Player Length: " + BodySegments.Count.ToString(),
                                                  Vector2.One * 5,
                                                  Color.White);
         }
@@ -256,7 +259,7 @@ namespace CrazyWorm
                 if (reanimating == false && dead == false)
                 {
                     BodySegments.Clear();
-                    AddSegments(10);
+                    AddSegments(STARTING_SEGMENTS);
                 }
             }
         }

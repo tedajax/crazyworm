@@ -42,7 +42,7 @@ namespace CrazyWorm
                 if (a.CollidesWith(play))
                 {
                     a.Reposition();
-                    play.AddSegments(5);
+                    play.AddSegments(Player.ADDED_SEGMENTS);
                 }
                 a.Update(gameTime);
             }
