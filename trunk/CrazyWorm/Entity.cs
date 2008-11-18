@@ -15,8 +15,8 @@ namespace CrazyWorm
 
         protected Vector2 ResScaler; //Scaler for position, scale, and velocity based on resolution
 
-        public abstract void Update(GameTime gameTime);
-        public abstract void Draw();
+        public virtual void Update(GameTime gameTime) { }
+        public virtual void Draw() { }
 
         //Returns position multiplied by resolution scaler
         public Vector2 ResPosition() { return Position * BaseGame.GetResScaler(); }

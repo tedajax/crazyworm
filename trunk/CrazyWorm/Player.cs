@@ -21,7 +21,7 @@ namespace CrazyWorm
         bool collisionon = false; //because if we spawned on top of ourselves with it on we would die instantly, not a very good game
         TimeSpan tocollisionon; //when it hits 0 turn on collision
 
-        const int STARTING_SEGMENTS = 10;
+        const int STARTING_SEGMENTS = 50;
         public static int ADDED_SEGMENTS = 10;
 
         public Player()
