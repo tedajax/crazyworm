@@ -82,8 +82,10 @@
   <ItemGroup>
     <Compile Include="Actor.cs" />
     <Compile Include="Apple.cs" />
+    <Compile Include="AppleManager.cs" />
     <Compile Include="BoundingCircle.cs" />
     <Compile Include="BoundingRectangle.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="CollisionManager.cs" />
     <Compile Include="Entity.cs" />
@@ -94,7 +96,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="BaseGame.cs" />
     <Compile Include="Segment.cs" />
+    <Compile Include="SpinningButton.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="Text.cs" />
+    <Compile Include="TextButton.cs" />
     <Compile Include="VisibleActor.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="WindowManager.cs" />
